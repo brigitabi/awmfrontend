@@ -72,20 +72,10 @@ const Home = () => {
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
-            <IoCreateOutline
-              className=""
-              size={20}
-              onClick={goToCreateYourStatement}
-              title="Create Your Own Statement"
-            />
-            {isHovering && (
-              <div className="absolute left-full ml-2 py-1 px-4 bg-black text-white text-sm rounded">
-                Create Your Own Statement
-              </div>
-            )}
+    
           </div>
 
-          <p className="text-center bg-blue-200 rounded-full py-4 mx-auto p-4 cursor-pointer">
+          <p className="text-center text-white bg-violet-950 rounded-full py-4 mx-auto p-4 cursor-pointer">
             {currentStatement}
           </p>
         </div>
@@ -93,19 +83,19 @@ const Home = () => {
         <div className="flex flex-col items-center py-4">
           <div className="flex flex-row space-x-12 py-4 justify-center">
             <AiFillLike
-              size={50}
-              className="cursor-pointer"
+              size={40}
+              className="cursor-pointer text-green-600"
               onClick={updateStatement}
             />
             <AiOutlineDislike
-              size={50}
-              className="cursor-pointer"
+              size={40}
+              className="cursor-pointer text-red-300"
               onClick={updateStatement}
             />
           </div>
           <div className="mt-4">
             <BsSkipEndCircle
-              size={45}
+              size={35}
               onClick={updateStatement}
               className="opacity-60"
             />
