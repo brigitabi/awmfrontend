@@ -3,6 +3,9 @@ import { BsSkipEndCircle } from "react-icons/bs";
 import { AiFillLike, AiOutlineDislike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+
 const Home = () => {
   const [randomStatement, setRandomStatement] = useState(null);
   const [data, setData] = useState([]);
@@ -17,7 +20,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/statements");
+        const response = await fetch(`${backendUrl}/api/statements`);
         const json = await response.json();
         setData(json);
       } catch (err) {

@@ -33,7 +33,7 @@ export default function Navbar() {
             to="/"
             className="brand mr-4 flex items-center text-xl text-white"
           >
-            <p className="mr-2 rounded-full bg-transparent p-1">
+            <p className="mr-2 rounded-full bg-transparent p-1 cursor-pointer">
               <Logo className="fill-green-500 text-2xl" />
             </p>
             Agree With Me
