@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Statistics from "./pages/Statistics";
 import CreateYourStatement from "./pages/CreateYourStatement";
+import Profile from "./pages/Profile";
 
 
 
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/create-your-statement" element={<CreateYourStatement />} />
       </Routes>
