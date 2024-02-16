@@ -27,7 +27,7 @@ const Home = () => {
     if (data.length > 0) {
       const randomIndex = Math.floor(Math.random() * data.length);
       setRandomStatement(data[randomIndex]);
-      setStatementCount(prevCount => prevCount + 1);
+      setStatementCount((prevCount) => prevCount + 1);
     }
   };
 
@@ -40,7 +40,7 @@ const Home = () => {
     } else {
       console.log("User not authenticated. Please log in.");
       // navigate("/login");
-      if (statementCount >= 5) { 
+      if (statementCount >= 5) {
         navigate("/login");
       }
     }
@@ -48,6 +48,13 @@ const Home = () => {
 
   return (
     <div className="px-8 py-24 ring-blue-500 mx-auto">
+      <div>
+
+      </div>
+      <h1 className="text-center py-4 text-2xl text-red-300">
+        Ten a Day, Have Your Say: React & Play Away!
+      </h1>
+
       <div className="flex flex-col space-x-2 py-24">
         {randomStatement && (
           <p className="text-white text-center">{randomStatement.statement}</p>

@@ -39,29 +39,31 @@ export default function Navbar() {
             Agree With Me
           </NavLink>
 
-          <IoMenu
-            className="cursor-pointer"
-            onClick={handleMenuClick} 
-          />
+          <div className="relative">
+            <IoMenu
+              id="menu"
+              className="cursor-pointer"
+              onClick={handleMenuClick}
+            />
 
-          {/* options menu */}
-          {showMenu && (
-            <div className="absolute top-full right-20  bg-[#321664] text-white shadow-md p-4 rounded-lg">
-              <button
-                className="block w-full text-left py-2 px-4 text-white hover:bg-green-800 hover:rounded-lg"
-                onClick={() => displayOptions("profile")}
-              >
-                Profile
-              </button>
-              <button
-                className="block w-full text-left py-2 px-4 text-white hover:bg-green-800 hover:rounded-lg"
-                onClick={() => displayOptions("statistics")}
-              >
-                Statistics
-              </button>
-            </div>
-          )}
-         
+            {/* options menu */}
+            {showMenu && (
+              <div className="absolute top-full right-0 mt-4  bg-[#321664] text-white shadow-md p-4 rounded-lg">
+                <button
+                  className="block w-full text-left py-2 px-4 text-white hover:bg-green-800 hover:rounded-lg"
+                  onClick={() => displayOptions("profile")}
+                >
+                  Profile
+                </button>
+                <button
+                  className="block w-full text-left py-2 px-4 text-white hover:bg-green-800 hover:rounded-lg"
+                  onClick={() => displayOptions("statistics")}
+                >
+                  Statistics
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
