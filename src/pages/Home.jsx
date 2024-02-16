@@ -9,6 +9,10 @@ const Home = () => {
   const userId = localStorage.getItem("userId");
   const [statementCount, setStatementCount] = useState(0);
   const navigate = useNavigate();
+  const [scalingIcon, setScalingIcon] = useState(null);
+  const [bouncingIcon, setBouncingIcon] = useState(null);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +38,7 @@ const Home = () => {
   const handleIconClick = (reactionType) => () => {
     getRandomStatement();
     console.log(`Reaction: ${reactionType}`);
+    setScalingIcon(reactionType) || setBouncingIcon(reactionType);
 
     if (userId) {
       console.log(`Reaction: ${reactionType}, User ID: ${userId}`);
@@ -51,7 +56,7 @@ const Home = () => {
       <div>
 
       </div>
-      <h1 className="text-center py-4 text-2xl text-red-300">
+      <h1 className="text-center py-4 text-2xl text-green-300">
         Ten a Day, Have Your Say: React & Play Away!
       </h1>
 
@@ -62,14 +67,18 @@ const Home = () => {
 
         <div className="flex flex-col items-center py-4">
           <div className="flex flex-row space-x-12 py-4 justify-center">
-            <AiFillLike
+          <AiFillLike
               size={40}
-              className="cursor-pointer text-green-600"
+              className={`cursor-pointer text-green-600 ${
+                bouncingIcon === "thumbsUp" ? "bouncing-icon" : ""
+              }`}
               onClick={handleIconClick("thumbsUp")}
             />
             <AiOutlineDislike
               size={40}
-              className="cursor-pointer text-red-300"
+              className={`cursor-pointer text-red-300 ${
+                scalingIcon === "thumbsDown" ? "scaling-icon" : ""
+              }`}
               onClick={handleIconClick("thumbsDown")}
             />
           </div>
