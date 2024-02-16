@@ -7,6 +7,7 @@ const Home = () => {
   const [randomStatement, setRandomStatement] = useState(null);
   const [data, setData] = useState([]);
   const userId = localStorage.getItem("userId");
+  const [statementCount, setStatementCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Home = () => {
     if (data.length > 0) {
       const randomIndex = Math.floor(Math.random() * data.length);
       setRandomStatement(data[randomIndex]);
+      setStatementCount(prevCount => prevCount + 1);
     }
   };
 
@@ -38,6 +40,9 @@ const Home = () => {
     } else {
       console.log("User not authenticated. Please log in.");
       // navigate("/login");
+      if (statementCount >= 5) { 
+        navigate("/login");
+      }
     }
   };
 
