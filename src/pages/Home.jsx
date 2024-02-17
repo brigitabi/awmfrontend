@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { BsSkipEndCircle } from "react-icons/bs";
 import { AiFillLike, AiOutlineDislike } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import { useUUID } from "../components/CustomHookUuid";
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Home = () => {
-  const [randomStatement, setRandomStatement] = useState(null);
-  const [data, setData] = useState([]);
-  const [statementCount, setStatementCount] = useState(0);
-  const navigate = useNavigate();
+  const [statements, setStatements] = useState([]);
+  const [statementIndex, setStatementIndex] = useState(0);
   const [scalingIcon, setScalingIcon] = useState(null);
   const [bouncingIcon, setBouncingIcon] = useState(null);
   const uuid = useUUID();
   const [userId, setUserId] = useState(null);
 
-  useEffect(() => { 
-    if (uuid) { 
+  useEffect(() => {
+    if (uuid) {
       const userIdFromLocalStorage = localStorage.getItem("uuid");
       setUserId(userIdFromLocalStorage);
     }
@@ -27,27 +24,27 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${backendUrl}/api/statements`);
-        const json = await response.json();
-        setData(json);
+        const data = await response.json();
+        setStatements(data);
+
+        console.log("data from backend", data);
       } catch (err) {
         console.error(err);
       }
     };
+
     fetchData();
   }, []);
 
-  const getRandomStatement = () => {
-    if (data.length > 0) {
-      const randomIndex = Math.floor(Math.random() * data.length);
-      setRandomStatement(data[randomIndex]);
-      setStatementCount((prevCount) => prevCount + 1);
+  const getNextStatement = () => {
+    if (statementIndex < statements.length) {
+      setStatementIndex((prevIndex) => prevIndex + 1);
     }
   };
 
   const handleIconClick = (reactionType) => async () => {
-    getRandomStatement();
-    console.log(`Reaction: ${reactionType}`);
-    setScalingIcon(reactionType) || setBouncingIcon(reactionType);
+    setScalingIcon(reactionType);
+    setBouncingIcon(reactionType);
 
     setTimeout(() => {
       setScalingIcon(null);
@@ -55,34 +52,36 @@ const Home = () => {
     }, 1500);
 
     if (uuid && userId) {
-      if (userId) {
-        console.log(`Reaction: ${reactionType}, User ID: ${userId}`);
-      } else {
-        console.log("User not authenticated. Please log in.");
-        // navigate("/login");
-        if (statementCount >= 5) {
-          navigate("/login");
-        }
-      }
-      try {
-        const response = await fetch(`${backendUrl}/api/reactions`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: uuid,
-            reaction: reactionType,
-          }),
-        });
+      const currentStatement = statements[statementIndex];
+     
+      if (currentStatement) {
+        try {
+          const response = await fetch(`${backendUrl}/api/reactions`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user_id: uuid,
+              statement_id: currentStatement.statement_id,
+              reaction: reactionType,
+            }),
+          });
 
-        if (response.ok) {
-          console.log("Reaction sent successfully.");
-        } else {
-          console.error("Failed to send reaction.");
+          if (response.ok) {
+            console.log(
+              `Reaction: ${reactionType}, User ID: ${uuid}, Statement Id: ${currentStatement.statement_id}`,
+            );
+
+            getNextStatement();
+          } else {
+            console.error("Failed to send reaction.");
+          }
+        } catch (error) {
+          console.error("Error sending reaction:", error);
         }
-      } catch (error) {
-        console.error("Error sending reaction:", error);
+      } else {
+        console.log("Statement not found.");
       }
     } else {
       console.log("User UUID not found.");
@@ -97,8 +96,10 @@ const Home = () => {
       </h1>
 
       <div className="flex flex-col space-x-2 py-24">
-        {randomStatement && (
-          <p className="text-white text-center">{randomStatement.statement}</p>
+        {statements.length > 0 && statementIndex < statements.length && (
+          <p className="text-white text-center">
+            {statements[statementIndex].statement}
+          </p>
         )}
 
         <div className="flex flex-col items-center py-4">
