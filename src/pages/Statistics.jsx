@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import YourStatements from './YourStatements';
 
 
 const Stats = () => {
@@ -27,9 +28,9 @@ const Stats = () => {
       </div>
 
       <div>
-        {selectedOption === 'Your Statements' && <p className='text-center -rotate-12'>Test 1</p>}
+        {selectedOption === 'Your Statements' && <p className='text-center '>< YourStatements/></p>}
         {selectedOption === 'Others' && <p className='text-center text-xl rotate-12'>Test 2 </p>}
-        {selectedOption === "Trends" && <p className='text-center text-2xl rotate-4 px-4'>Test 3</p>}
+        {/* {selectedOption === "Trends" && <p className='text-center text-2xl rotate-4 px-4'>Test 3</p>} */}
       </div>
     </div>
   )
