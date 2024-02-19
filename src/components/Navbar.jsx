@@ -49,6 +49,23 @@ export default function Navbar() {
             {/* options menu */}
             {showMenu && (
               <div className="absolute top-full -right-10 mt-4  bg-[#321664] text-white shadow-md p-2 rounded-lg">
+                
+                <NavLink to="/signup">
+                  <button
+                    className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
+                    onClick={() => displayOptions("signup")}
+                  >
+                    Sign Up
+                  </button>
+                </NavLink>
+                <NavLink to="/login">
+                  <button
+                    className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
+                    onClick={() => displayOptions("login")}
+                  >
+                    Login
+                  </button>
+                </NavLink>
                 <button
                   className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
                   onClick={() => displayOptions("profile")}

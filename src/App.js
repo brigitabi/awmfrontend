@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Statistics from "./pages/Statistics";
 import CreateYourStatement from "./pages/CreateYourStatement";
 import Profile from "./pages/Profile";
+import SignUp from "./pages/SignUp";
 
 
 
@@ -15,6 +16,7 @@ function App() {
     
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/statistics" element={<Statistics />} />
