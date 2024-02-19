@@ -54,21 +54,21 @@ export default function Navbar() {
                {user && <h2 className="mb-4">Welcome, {user.firstName || user.lastName || user.email}</h2>}
                {!user && (
                 <NavLink to="/signup">
-                  <button
+                  {/* <button
                     className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
                     onClick={() => displayOptions("signup")}
                   >
                     Sign Up
-                  </button>
+                  </button> */}
                 </NavLink>
                 )}
                 <NavLink to="/login">
-                  <button
+                  {/* <button
                     className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
                     onClick={() => displayOptions("login")}
                   >
                     Login
-                  </button>
+                  </button> */}
                 </NavLink>
                 <button
                   className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
