@@ -102,7 +102,7 @@ const Home = () => {
     if (lastReactionDate === currentDate) {
       setShowMessage(true);
     }
-  }, []);
+  }, [reactionsCount]);
 
   return (
     <div className="px-8 py-24 ring-blue-500 mx-auto">
