@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 import { IoMenu } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
+import { useUser } from "../context/UserContext";
 
 export default function Navbar() {
+  const { user } = useUser();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -49,7 +51,8 @@ export default function Navbar() {
             {/* options menu */}
             {showMenu && (
               <div className="absolute top-full -right-10 mt-4  bg-[#321664] text-white shadow-md p-2 rounded-lg">
-                
+               {user && <h2 className="mb-4">Welcome, {user.firstName || user.lastName || user.email}</h2>}
+               {!user && (
                 <NavLink to="/signup">
                   <button
                     className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
@@ -58,6 +61,7 @@ export default function Navbar() {
                     Sign Up
                   </button>
                 </NavLink>
+                )}
                 <NavLink to="/login">
                   <button
                     className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"

@@ -20,7 +20,7 @@ const Login = () => {
       const token = await user?.getIdToken();
 
       // TODO: add csrf token
-      const { data } = await axios.post('/api/auth/login', { token });
+      const { data } = await axios.post('http://localhost:8000/api/auth/login', { token });
 
       if (data) {
         window.location.href = '/';
@@ -44,7 +44,7 @@ const Login = () => {
       const token = await user?.getIdToken();
 
       // TODO: add csrf token
-      const { data } = await axios.post('/api/auth/login', { token });
+      const { data } = await axios.post('http://localhost:8000/api/auth/login', { token });
 
       console.log('login data', data);
 
@@ -73,7 +73,7 @@ const Login = () => {
       const token = await user?.getIdToken();
 
       // TODO: add csrf token
-      const { data } = await axios.post('/api/auth/login', { token });
+      const { data } = await axios.post('http://localhost:8000/api/auth/login', { token });
 
       if (data) {
         window.location.href = '/';

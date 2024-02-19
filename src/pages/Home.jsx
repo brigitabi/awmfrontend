@@ -10,8 +10,10 @@ const Home = () => {
   const [statementIndex, setStatementIndex] = useState(0);
   const [scalingIcon, setScalingIcon] = useState(null);
   const [bouncingIcon, setBouncingIcon] = useState(null);
+  const [showMessage, setShowMessage] = useState(false);
   const uuid = useUUID();
   const [userId, setUserId] = useState(null);
+  const [reactionsCount, setReactionsCount] = useState(0);
 
   useEffect(() => {
     if (uuid) {
@@ -53,7 +55,7 @@ const Home = () => {
 
     if (uuid && userId) {
       const currentStatement = statements[statementIndex];
-     
+
       if (currentStatement) {
         try {
           const response = await fetch(`${backendUrl}/api/reactions`, {
@@ -73,6 +75,12 @@ const Home = () => {
               `Reaction: ${reactionType}, User ID: ${uuid}, Statement Id: ${currentStatement.statement_id}`,
             );
 
+            setReactionsCount((prevCount) => prevCount + 1);
+
+            if (reactionsCount + 1 === 10) {
+              setShowMessage(true);
+            }
+
             getNextStatement();
           } else {
             console.error("Failed to send reaction.");
@@ -90,44 +98,55 @@ const Home = () => {
 
   return (
     <div className="px-8 py-24 ring-blue-500 mx-auto">
-      <div></div>
       <h1 className="text-center text-2xl text-green-600">
         Ten a Day, Have Your Say
       </h1>
 
-      <div className="flex flex-col space-x-2 py-24">
-        {statements.length > 0 && statementIndex < statements.length && (
-          <p className="text-white text-center">
-            {statements[statementIndex].statement}
-          </p>
-        )}
+      {!showMessage && (
+        <div className="flex flex-col space-x-2 py-24">
+          {statements.length > 0 && statementIndex < statements.length && (
+            <p className="text-white text-center">
+              {statements[statementIndex].statement}
+            </p>
+          )}
 
-        <div className="flex flex-col items-center py-4">
-          <div className="flex flex-row space-x-12 py-4 justify-center">
-            <AiFillLike
-              size={40}
-              className={`cursor-pointer text-green-600 ${
-                bouncingIcon === "thumbsUp" ? "bouncing-icon" : ""
-              }`}
-              onClick={handleIconClick("thumbsUp")}
-            />
-            <AiOutlineDislike
-              size={40}
-              className={`cursor-pointer text-red-300 ${
-                scalingIcon === "thumbsDown" ? "scaling-icon" : ""
-              }`}
-              onClick={handleIconClick("thumbsDown")}
-            />
-          </div>
-          <div className="mt-4">
-            <BsSkipEndCircle
-              size={35}
-              className="opacity-60 cursor-pointer"
-              onClick={handleIconClick("pass")}
-            />
+          <div className="flex flex-col items-center py-4">
+            <div className="flex flex-row space-x-12 py-4 justify-center">
+              <AiFillLike
+                size={40}
+                className={`cursor-pointer text-green-600 ${
+                  bouncingIcon === "thumbsUp" ? "bouncing-icon" : ""
+                }`}
+                onClick={handleIconClick("thumbsUp")}
+              />
+              <AiOutlineDislike
+                size={40}
+                className={`cursor-pointer text-red-300 ${
+                  scalingIcon === "thumbsDown" ? "scaling-icon" : ""
+                }`}
+                onClick={handleIconClick("thumbsDown")}
+              />
+            </div>
+            <div className="mt-4">
+              <BsSkipEndCircle
+                size={35}
+                className="opacity-60 cursor-pointer"
+                onClick={handleIconClick("pass")}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {showMessage && (
+        <div className="flex flex-col items-center ">
+          <div className="absolute top-1/2  transform w-auto bg-green-700 px-8 p-4 rounded-md shadow-lg scale-110 cursor-pointer">
+            <p className="text-center text-xl text-white">
+            10 reactions down, see you tomorrow for more fun! 🎉
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
