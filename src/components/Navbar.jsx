@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
-import { IoMenu } from "react-icons/io5";
-import { useNavigate } from "react-router-dom"; 
-import { useUser } from "../context/UserContext";
+import { ImStatsBars } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  const { user } = useUser();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-
-  const handleMenuClick = () => {
-    setShowMenu(!showMenu);
-  };
 
   const displayOptions = (option) => {
     if (option === "profile") {
@@ -42,45 +36,18 @@ export default function Navbar() {
           </NavLink>
 
           <div className="relative">
-            <IoMenu
-              id="menu"
-              className="cursor-pointer"
-              onClick={handleMenuClick}
-            />
+            <NavLink to="/statistics">
+              <ImStatsBars id="menu" className="cursor-pointer" />
+            </NavLink>
 
             {/* options menu */}
             {showMenu && (
               <div className="absolute top-full -right-10 mt-4  bg-[#321664] text-white shadow-md p-2 rounded-lg">
-               {user && <h2 className="mb-4">Welcome, {user.firstName || user.lastName || user.email}</h2>}
-               {!user && (
-                <NavLink to="/signup">
-                  {/* <button
-                    className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
-                    onClick={() => displayOptions("signup")}
-                  >
-                    Sign Up
-                  </button> */}
-                </NavLink>
-                )}
-                <NavLink to="/login">
-                  {/* <button
-                    className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
-                    onClick={() => displayOptions("login")}
-                  >
-                    Login
-                  </button> */}
-                </NavLink>
-                <button
-                  className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
-                  onClick={() => displayOptions("profile")}
-                >
-                  Profile
-                </button>
                 <button
                   className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
                   onClick={() => displayOptions("statistics")}
                 >
-                  Statistics
+                  Statistics 
                 </button>
               </div>
             )}

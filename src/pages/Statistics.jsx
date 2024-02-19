@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import YourStatistics from './YourStatistics';
-import Global from './GlobalStatistics';
+import GlobalStatistics from './GlobalStatistics';
 
 
 const Stats = () => {
@@ -10,28 +10,24 @@ const Stats = () => {
     setSelectedOption('Your Statements');
   }
 
-  const handleOthersClick = () => { 
-    setSelectedOption('Others');
+  const handleGlobalClick = () => { 
+    setSelectedOption('Global');
   }
 
-  const handleTrendsClick = () => {
-    setSelectedOption('Trends'); 
-  }
+  
   return (
     <div>
-      <p className='text-center text-2xl py-12'>Statistics</p>
+      <p className='text-center text-2xl py-12'>Statistics 📊</p>
       <div className='flex justify-center items-center py-24'>
-        <button onClick={handleYourStatemetnesClick} className='cursor-pointer'>Your Overall Statistics</button>
+        <button onClick={handleYourStatemetnesClick} className='cursor-pointer'>👤 Your Overall Statistics </button>
         <span className='mx-2'>|</span>
-        <button onClick={handleOthersClick} className='cursor-pointer'>Global</button>
-        {/* <span className='mx-2'>|</span> */}
-        {/* <button onClick={handleTrendsClick} className='cursor-pointer'>Trends</button> */}
+        <button onClick={handleGlobalClick} className='cursor-pointer'>Global 🌎</button>
+      
       </div>
 
       <div>
         {selectedOption === 'Your Statements' && <p className='text-center '>< YourStatistics/></p>}
-        {selectedOption === 'Others' && <p className='text-center text-xl'><Global/> </p>}
-        {/* {selectedOption === "Trends" && <p className='text-center text-2xl rotate-4 px-4'>Test 3</p>} */}
+        {selectedOption === 'Global' && <p className='text-center text-xl'><GlobalStatistics/> </p>}
       </div>
     </div>
   )
