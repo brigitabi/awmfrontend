@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BsSkipEndCircle } from "react-icons/bs";
 import { AiFillLike, AiOutlineDislike } from "react-icons/ai";
 import { useUUID } from "../components/CustomHookUuid";
+import useCookie from "./useCookie";
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -14,6 +15,15 @@ const Home = () => {
   const uuid = useUUID();
   const [userId, setUserId] = useState(null);
   const [reactionsCount, setReactionsCount] = useState(0);
+
+  const [reactionCountCookie, setReactionCountCookie] = useCookie(
+    "reactionsCount",
+    0
+  );
+  const [lastReactionTimeCookie, setLastReactionTimeCookie] = useCookie(
+    "lastReactionTime",
+    null
+  );
 
   useEffect(() => {
     if (uuid) {
@@ -76,7 +86,12 @@ const Home = () => {
             );
 
             setReactionsCount((prevCount) => prevCount + 1);
+            setReactionCountCookie(reactionsCount + 1);
 
+            setLastReactionTimeCookie(
+              new Date().toISOString().split("T")[0]
+            );
+            
             if (reactionsCount + 1 === 10) {
               setShowMessage(true);
             }
@@ -97,12 +112,20 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const lastReactionDate = localStorage.getItem("lastReactionDate");
+    const lastReactionDate = lastReactionTimeCookie;
     const currentDate = new Date().toISOString().split("T")[0];
-    if (lastReactionDate === currentDate) {
-      setShowMessage(true);
+    
+    // If last reaction date is not today, reset reactions count and show message
+    if (lastReactionDate !== currentDate) {
+      setReactionCountCookie(0); // Reset reactions count
+      setShowMessage(false); // Reset message
     }
-  }, [reactionsCount]);
+  
+    // Check if reactions count is 10
+    if (reactionCountCookie >= 10) {
+      setShowMessage(true); // Show message
+    }
+  }, [reactionCountCookie, lastReactionTimeCookie]);
 
   return (
     <div className="px-8 py-24 ring-blue-500 mx-auto">
