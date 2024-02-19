@@ -96,9 +96,17 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    const lastReactionDate = localStorage.getItem("lastReactionDate");
+    const currentDate = new Date().toISOString().split("T")[0];
+    if (lastReactionDate === currentDate) {
+      setShowMessage(true);
+    }
+  }, []);
+
   return (
     <div className="px-8 py-24 ring-blue-500 mx-auto">
-      <h1 className="text-center text-2xl text-green-600">
+      <h1 className="text-center text-2xl text-green-500">
         Ten a Day, Have Your Say
       </h1>
 
@@ -142,7 +150,7 @@ const Home = () => {
         <div className="flex flex-col items-center ">
           <div className="absolute top-1/2  transform w-auto bg-green-700 px-8 p-4 rounded-md shadow-lg scale-110 cursor-pointer">
             <p className="text-center text-xl text-white">
-            10 reactions down, see you tomorrow for more fun! 🎉
+              10 reactions down, see you tomorrow for more fun! 🎉
             </p>
           </div>
         </div>
