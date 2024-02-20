@@ -38,7 +38,7 @@ export default function Navbar() {
           </NavLink>
 
           <div className="relative">
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               <NavLink to="/statistics">
                 <ImStatsBars id="menu" className="cursor-pointer" size={25} />
               </NavLink>

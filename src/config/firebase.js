@@ -1,7 +1,6 @@
 import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 
-
 let firebaseClient;
 let analytics;
 
