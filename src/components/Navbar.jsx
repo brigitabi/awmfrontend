@@ -3,8 +3,10 @@ import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 import { ImStatsBars } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineMessage } from "react-icons/ai";
 
 export default function Navbar() {
+  const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -36,9 +38,28 @@ export default function Navbar() {
           </NavLink>
 
           <div className="relative">
-            <NavLink to="/statistics">
-              <ImStatsBars id="menu" className="cursor-pointer" />
-            </NavLink>
+            <div className="flex space-x-4">
+              <NavLink to="/statistics">
+                <ImStatsBars id="menu" className="cursor-pointer" size={25} />
+              </NavLink>
+
+              <div
+                onMouseEnter={() => setShowMessage(true)}
+                onMouseLeave={() => setShowMessage(false)}
+              >
+                <AiOutlineMessage
+                  id="menu"
+                  className="cursor-pointer"
+                  size={25}
+                />
+              </div>
+
+              {showMessage && (
+                <div className="absolute top-10 -right-2 text-green-600 text-xs shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105 shadow-green-500 p-2 rounded-lg">
+                  <p>Coming Soon</p>
+                </div>
+              )}
+            </div>
 
             {/* options menu */}
             {showMenu && (
@@ -47,7 +68,7 @@ export default function Navbar() {
                   className="block w-full text-left py-2 px-4 text-white hover:bg-violet-900 hover:rounded-lg text-sm"
                   onClick={() => displayOptions("statistics")}
                 >
-                  Statistics 
+                  Statistics
                 </button>
               </div>
             )}
